@@ -15,7 +15,7 @@ LDFLAGS +=  -X github.com/aws/amazon-cloudwatch-agent/cfg/agentinfo.VersionStr=$
 LDFLAGS +=  -X github.com/aws/amazon-cloudwatch-agent/cfg/agentinfo.BuildStr=${BUILD}
 LINUX_AMD64_BUILD = CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="${LDFLAGS}" -o $(BUILD_SPACE)/bin/linux_amd64
 LINUX_ARM64_BUILD = GOOS=linux GOARCH=arm64 go build -ldflags="${LDFLAGS}" -o $(BUILD_SPACE)/bin/linux_arm64
-LINUX_ARMHF_BUILD = GOOS=linux GOARCH=arm GOARM=7 go build -ldflags="${LDFLAGS}" -o $(BUILD_SPACE)/bin/linux_arm64
+LINUX_ARMHF_BUILD = GOOS=linux GOARCH=arm GOARM=7 go build -ldflags="${LDFLAGS}" -o $(BUILD_SPACE)/bin/linux_armhf
 WIN_BUILD = GOOS=windows GOARCH=amd64 go build -ldflags="${LDFLAGS}" -o $(BUILD_SPACE)/bin/windows_amd64
 DARWIN_BUILD = GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -ldflags="${LDFLAGS}" -o $(BUILD_SPACE)/bin/darwin_amd64
 
@@ -36,7 +36,7 @@ AOC_LDFLAGS += -X $(AOC_IMPORT_PATH)/pkg/logger.WindowsLogPath=C:\\ProgramData\\
 AOC_LDFLAGS += -X $(AOC_IMPORT_PATH)/pkg/extraconfig.unixExtraConfigPath=/opt/aws/amazon-cloudwatch-agent/cwagent-otel-collector/etc/extracfg.txt
 AOC_LDFLAGS += -X $(AOC_IMPORT_PATH)/pkg/extraconfig.windowsExtraConfigPath=C:\\ProgramData\\Amazon\\AmazonCloudWatchAgent\\CWAgentOtelCollector\\extracfg.txt
 
-release: clean test build package-rpm package-deb package-win package-darwin
+release: clean test build package-deb
 
 build: check_secrets cwagent-otel-collector amazon-cloudwatch-agent config-translator start-amazon-cloudwatch-agent amazon-cloudwatch-agent-config-wizard config-downloader
 
